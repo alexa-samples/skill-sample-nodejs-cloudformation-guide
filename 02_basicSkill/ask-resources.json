@@ -1,0 +1,28 @@
+{
+  "askcliResourcesVersion": "2020-03-31",
+  "profiles": {
+    "flhl-ai-sa-eu-dev": {
+      "skillMetadata": {
+        "src": "./skill-package"
+      },
+      "code": {
+        "default": {
+          "src": "./lambda"
+        }
+      },
+      "skillInfrastructure": {
+        "userConfig": {
+          "runtime": "nodejs12.x",
+          "handler": "index.handler",
+          "templatePath": "./infrastructure/cfn-deployer/skill-stack.yaml",
+          "awsRegion": "eu-west-1",
+          "artifactsS3": {
+            "bucketName": "cfn-source-eu-west-1",
+            "bucketKey": "cfnCookbookBasic.zip"
+          }
+        },
+        "type": "@ask-cli/cfn-deployer"
+      }
+    }
+  }
+}
