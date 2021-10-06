@@ -23,4 +23,8 @@ package.AI_SA_EU_CloudFormation_Cookbook = {
         };
     };
 
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> 21fbc27 (Add CodeBrowser Config file)
