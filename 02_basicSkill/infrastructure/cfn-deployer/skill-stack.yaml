@@ -5,10 +5,11 @@ Parameters:
     Default: cfnCookbook-basicSkill
     Description: >
       An alias to make physical names of stack resources more easily to attribute
-    AllowedPattern: '([a-zA-Z0-9-_]{4,64})'
+    AllowedPattern: '([a-zA-Z0-9][a-zA-Z0-9-]{3,64})'
     ConstraintDescription: >
-      Must be between 4 and 64 letters,
-      and contain only alphanumeric characters, hyphens and underscores
+      Must be between 4 and 64 characters,
+      begin with an alphanumeric character
+      and contain only alphanumeric characters and hyphens
   DebugMode:
     Type: String
     Default: true
