@@ -19,6 +19,15 @@ This README provides a general introduction to Cfn, as far as relevant for Alexa
 
 Prerequisite for trying out these examples is [a configured ASK CLI profile](https://developer.amazon.com/en-US/docs/alexa/smapi/ask-cli-command-reference.html#configure-command) that is associated with [a configured AWS CLI profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). The AWS CLI user needs to have a the IAM policies required for deploying the respective resources (e.g. `lambda:CreateFunction`).
 
+### Trying out Cfn templates without ASK CLI
+
+In some cases you might want to try out some of the templates in this Cookbook without setting up a skill project (or an ASK CLI profile) first. This is possible, e.g. if you just upload one of the templates files in the [AWS Cfn Console](https://console.aws.amazon.com/cloudformation/home). One issue you'll encounter is to provide values for the parameters `CodeBucket`, `CodeKey`, `CodeVersion` & `SkillId` (explained in the 'Interaction b/w Cfn and ASK CLI' section below). If you fill in nonsense values (at least for the `Code*` parameters), the deployment will fail!
+Instead, you can use these 'dummy' values:
+- **CodeBucket:** `cfn-source-eu-west-1`
+- **CodeKey:** `cfnCookbookDummy.zip`
+- **CodeVersion:** `eUUqLNIE_pPC16_fb1OpBVRJmZT4qibs`
+- **SkillId:** `amzn1.ask.skill.20998b0d-c197-4289-8e31-44f2adb51240`
+
 ## Quickstart
 
 To get started with any of the example skills: 
