@@ -1,0 +1,33 @@
+{
+  "askcliResourcesVersion": "2020-03-31",
+  "profiles": {
+    "default": {
+      "skillMetadata": {
+        "src": "./skill-package"
+      },
+      "code": {
+        "default": {
+          "src": "./lambda"
+        }
+      },
+      "skillInfrastructure": {
+        "userConfig": {
+          "runtime": "nodejs12.x",
+          "handler": "index.handler",
+          "templatePath": "./infrastructure/cfn-deployer/skill-stack.yaml",
+          "awsRegion": "eu-west-1",
+          "artifactsS3": {
+            "bucketName": "cfn-source-eu-west-1",
+            "bucketKey": "cfnCookbookCloudFront.zip"
+          },
+          "cfn": {
+            "capabilities": [
+              "CAPABILITY_AUTO_EXPAND"
+            ]
+          }
+        },
+        "type": "@ask-cli/cfn-deployer"
+      }
+    }
+  }
+}

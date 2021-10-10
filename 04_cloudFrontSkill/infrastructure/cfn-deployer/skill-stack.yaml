@@ -1,0 +1,238 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  ProjectAlias:
+    Type: String
+    Default: cfnCookbook-cloudFrontSkill
+    Description: >
+      An alias to make physical names of stack resources more easily to attribute
+    AllowedPattern: '([a-zA-Z0-9-_]{4,64})'
+    ConstraintDescription: >
+      Must be between 4 and 64 letters,
+      and contain only alphanumeric characters, hyphens and underscores
+  DebugMode:
+    Type: String
+    Default: true
+    AllowedValues:
+      - true
+      - false
+    Description: |
+      Whether the Skill should run in debug mode. Value can bei either 'true' or 'false'
+  LogRetention:
+    Type: Number
+    Default: 1
+    Description: |
+      The retention period (in days) for the Lambda's Cloudwatch log group
+    AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653]
+  BucketPrefix:
+    Type: String
+    Default: ''
+    Description: >
+      The prefix of the bucket that will contain content
+    AllowedPattern: '([a-z0-9-]{0,64})'
+    ConstraintDescription: >
+      Must be below 64 letters,
+      and contain only lowercase alphanumeric characters and hyphens
+  CreateCloudFrontDistribution:
+    Type: String
+    Default: true
+    AllowedValues:
+      - true
+      - false
+    Description: |
+      Whether you need an AWS CloudFront CDN to distribute content
+  LambdaTimeout:
+    Type: Number
+    Default: 3
+    Description: The timeout for the Lambda function in seconds
+    MinValue: 3
+    MaxValue: 10
+  LambdaMemorySize:
+    Type: Number
+    Default: 128
+    Description: The memory size for the Lambda function in MB
+    AllowedValues:
+      - 128
+      - 256
+      - 512
+      - 1024
+  LambdaRuntime:
+    Type: String
+    Default: "nodejs12.x"
+    Description: |
+      The runtime environment for the Lambda function
+    AllowedValues:
+      - "nodejs12.x"
+      - "nodejs14.x"
+  LambdaHandler:
+    Type: String
+    Default: "index.handler"
+    Description: |
+      The function within your deployment package that will handle incoming requests
+  SkillId:
+    Type: String
+  CodeBucket:
+    Type: String
+  CodeKey:
+    Type: String
+  CodeVersion:
+    Type: String
+Conditions:
+  isBucketPrefixProvided: !Not [!Equals [ !Ref BucketPrefix, '' ]]
+  isCloudFrontDistributionRequested: !Equals [!Ref CreateCloudFrontDistribution, 'true']
+Resources:
+  LambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action:
+                - sts:AssumeRole
+        Path: /
+        Policies:
+          - PolicyName: !Sub ${ProjectAlias}-policy
+            PolicyDocument:
+              Version: 2012-10-17
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: !GetAtt LambdaLogGroup.Arn
+                - Effect: Allow
+                  Action:
+                    - s3:PutObject
+                    - s3:PutObjectACL
+                  Resource: !Sub ${Bucket.Arn}/*
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    Properties: 
+      LogGroupName: !Sub /aws/lambda/${ProjectAlias}-lambda
+      RetentionInDays: !Ref LogRetention
+  Bucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: 'Delete'
+    Properties:
+      BucketName: !Join
+        - "-"
+        - - !If
+            - isBucketPrefixProvided
+            - !Ref BucketPrefix
+            - 'Fn::Transform':
+              - Name: 'String'
+                Parameters:
+                  InputString: !Ref ProjectAlias
+                  Operation: Lower
+          - !Select
+            - 0
+            - !Split
+              - "-"
+              - !Select
+                - 2
+                - !Split
+                  - "/"
+                  - !Ref "AWS::StackId"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Condition: isCloudFrontDistributionRequested
+    Properties:
+      Bucket: !Ref Bucket
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:GetObject'
+            Effect: 'Allow'
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+            Resource:
+              - !Sub 'arn:aws:s3:::${Bucket}/*'
+  CloudFrontDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Condition: isCloudFrontDistributionRequested
+    Properties:
+      DistributionConfig:
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - 'HEAD'
+            - 'GET'
+          CachedMethods:
+            - 'HEAD'
+            - 'GET'
+          Compress: false
+          DefaultTTL: 86400
+          ForwardedValues:
+            Cookies:
+              Forward: 'none'
+            Headers:
+              - 'Origin'
+            QueryString: false
+          MaxTTL: 31536000
+          MinTTL: 86400
+          TargetOriginId: !Sub 's3-origin-${Bucket}'
+          ViewerProtocolPolicy: 'redirect-to-https'
+        DefaultRootObject: 'index.html'
+        Enabled: true
+        HttpVersion: 'http1.1'
+        IPV6Enabled: false
+        Origins:
+          - DomainName: !GetAtt Bucket.RegionalDomainName
+            Id: !Sub 's3-origin-${Bucket}'
+            OriginPath: ''
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}'
+        PriceClass: 'PriceClass_All'
+  CloudFrontOriginAccessIdentity:
+    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
+    Condition: isCloudFrontDistributionRequested
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: 'Access S3 bucket content only through CloudFront'
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${ProjectAlias}-lambda
+      Code:
+        S3Bucket: !Ref CodeBucket
+        S3Key: !Ref CodeKey
+        S3ObjectVersion: !Ref CodeVersion
+      Handler: !Ref LambdaHandler
+      Runtime: !Ref LambdaRuntime
+      Role: !GetAtt LambdaRole.Arn
+      MemorySize: !Ref LambdaMemorySize
+      Timeout: !Ref LambdaTimeout
+      Environment: 
+        Variables: 
+          DEBUG_MODE: !Ref DebugMode
+          PROJECT_NAME: !Ref ProjectAlias
+          BUCKET_NAME: !Ref Bucket
+          DISTRO_NAME: !If
+            - isCloudFrontDistributionRequested
+            - !GetAtt CloudFrontDistribution.DomainName
+            - Ref: AWS::NoValue
+  LambdaAliasDev:
+    Type: AWS::Lambda::Alias
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      FunctionVersion: $LATEST
+      Name: dev
+  LambdaAliasDevEventPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:invokeFunction
+      FunctionName: !Ref LambdaAliasDev
+      Principal: alexa-appkit.amazon.com
+      EventSourceToken: !Ref SkillId
+Outputs:
+  SkillEndpoint:
+    Description: ARN of the Lambda 'dev' alias
+    Value: !Ref LambdaAliasDev
