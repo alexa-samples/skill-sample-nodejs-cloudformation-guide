@@ -1,0 +1,20 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "Sample Skill for sending error messages via AWS SNS and Slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amazon Alexa",
+  "license": "ISC",
+  "dependencies": {
+    "ask-sdk": "^2.8.0",
+    "ask-sdk-core": "^2.6.0",
+    "ask-sdk-model": "^1.18.0",
+    "ask-sdk-v1adapter": "^2.8.0",
+    "aws-sdk": "^2.573.0",
+    "i18next": "^19.0.0",
+    "lodash.get": "^4.4.2"
+  }
+}

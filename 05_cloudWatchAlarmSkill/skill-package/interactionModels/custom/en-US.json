@@ -1,0 +1,63 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "cloud formation alarm",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "TimeoutIntent",
+                    "slots": [],
+                    "samples": [
+                        "time-out",
+                        "time-out error",
+                        "time-out response",
+                        "time out",
+                        "time out error",
+                        "time out response",
+                        "missing response"
+                    ]
+                },
+                {
+                    "name": "InvalidResponseIntent",
+                    "slots": [],
+                    "samples": [
+                        "invalid",
+                        "invalid response",
+                        "invalid answer",
+                        "bad response",
+                        "bad answer"
+                    ]
+                },
+                {
+                    "name": "RuntimeErrorIntent",
+                    "slots": [],
+                    "samples": [
+                        "runtime error",
+                        "runtime exception"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+  }
+  
