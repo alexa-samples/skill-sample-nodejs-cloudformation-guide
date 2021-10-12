@@ -1,0 +1,124 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  ProjectAlias:
+    Type: String
+    Default: cfnCookbook-apiGatewaySkill
+    Description: >
+      An alias to make physical names of stack resources more easily to attribute
+    AllowedPattern: '([a-zA-Z0-9-_]{4,64})'
+    ConstraintDescription: >
+      Must be between 4 and 64 letters,
+      and contain only alphanumeric characters, hyphens and underscores
+  LogRetention:
+    Type: Number
+    Default: 1
+    Description: |
+      The retention period (in days) for the Lambda's Cloudwatch log group
+    AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653]
+  LambdaTimeout:
+    Type: Number
+    Default: 3
+    Description: The timeout for the Lambda function in seconds
+    MinValue: 3
+    MaxValue: 10
+  LambdaMemorySize:
+    Type: Number
+    Default: 128
+    Description: The memory size for the Lambda function in MB
+    AllowedValues:
+      - 128
+      - 256
+      - 512
+      - 1024
+  LambdaRuntime:
+    Type: String
+    Default: "nodejs12.x"
+    Description: |
+      The runtime environment for the Lambda function
+    AllowedValues:
+      - "nodejs12.x"
+      - "nodejs14.x"
+  LambdaHandler:
+    Type: String
+    Default: "index.handler"
+    Description: |
+      The function within your deployment package that will handle incoming requests
+  SkillId:
+    Type: String
+  CodeBucket:
+    Type: String
+  CodeKey:
+    Type: String
+  CodeVersion:
+    Type: String
+Resources:
+  LambdaFunction:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      FunctionName: !Sub ${ProjectAlias}-lambda
+      Code:
+        S3Bucket: !Ref CodeBucket
+        S3Key: !Ref CodeKey
+        S3ObjectVersion: !Ref CodeVersion
+      Handler: !Ref LambdaHandler
+      Runtime: !Ref LambdaRuntime
+      Role: !GetAtt LambdaRole.Arn
+      MemorySize: !Ref LambdaMemorySize
+      Timeout: !Ref LambdaTimeout
+  LambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+        Path: /
+        Policies:
+          - PolicyName: !Sub ${ProjectAlias}-policy
+            PolicyDocument:
+              Version: 2012-10-17
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: !GetAtt LambdaLogGroup.Arn
+  ApiGatewayRestApi:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Body:
+        info:
+          version: '1.0'
+          title:
+            Ref: 'AWS::StackName'
+        paths:
+          /FlashBriefing:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations
+              responses: {}
+        swagger: '2.0'
+  ApiGatewayDeployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    Properties:
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      StageName: default
+  LambdaApiEventPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:invokeFunction'
+      Principal: apigateway.amazonaws.com
+      FunctionName:
+        Ref: LambdaFunction 
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayRestApi}/*/GET/FlashBriefing
+Outputs:
+  SkillEndpoint:
+    Value: !Sub https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/default/FlashBriefing

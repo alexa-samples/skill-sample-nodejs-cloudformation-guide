@@ -1,0 +1,54 @@
+{
+  "manifest": {
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "CloudFormation Cookbook - API Gateway Flash Briefing",
+          "summary": "Lorem ipsum dolor sit amet",
+          "description": "Lorem ipsum dolor sit amet",
+          "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_apiGateway_small.png",
+          "largeIconUri": "https://skillicons.s3.amazonaws.com/cfn_apiGateway_large.png"
+        }
+      },
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Sample Testing Instructions.",
+      "category": "KNOWLEDGE_AND_TRIVIA"
+    },
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "usesPersonalInfo": false,
+      "isChildDirected": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "http://www.example.com/privacyPolicy",
+          "termsOfUseUrl": "http://www.example.com/termsOfUse"
+        }
+      }
+    },
+    "apis": {
+      "flashBriefing": {
+        "locales": {
+          "en-US": {
+            "customErrorMessage": "Something went wrong. Please try again later!",
+            "feeds": [
+              {
+                "name": "default feed",
+                "isDefault": true,
+                "vuiPreamble": "From cloud formation cookbook: ",
+                "updateFrequency": "HOURLY",
+                "genre": "POLITICS",
+                "imageUri": "https://skillicons.s3.amazonaws.com/cfn_apiGateway_large.png",
+                "contentType": "TEXT",
+                "url": ""
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
