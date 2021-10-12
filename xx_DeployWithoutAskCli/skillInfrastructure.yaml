@@ -1,0 +1,380 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  ProjectAlias:
+    Type: String
+    Default: cfnCookbook-noAskCliSkill
+    Description: >
+      An alias to make physical names of stack resources more easily to attribute
+    AllowedPattern: '([a-zA-Z0-9][a-zA-Z0-9-]{3,64})'
+    ConstraintDescription: >
+      Must be between 4 and 64 characters,
+      begin with an alphanumeric character
+      and contain only alphanumeric characters and hyphens
+  DebugMode:
+    Type: String
+    Default: true
+    AllowedValues:
+      - true
+      - false
+    Description: |
+      Whether the Skill should run in debug mode. Value can bei either 'true' or 'false'
+  LogRetention:
+    Type: Number
+    Default: 1
+    Description: |
+      The retention period (in days) for the Lambda's Cloudwatch log group
+    AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, 3653]
+  CreateDynamoDbDatabase:
+    Type: String
+    Default: false
+    AllowedValues:
+      - true
+      - false
+    Description: |
+      Whether you need an AWS DynamoDB database
+  DynamoDbBillingMode:
+    Type: String
+    Default: PROVISIONED
+    Description: >
+      Billing mode for your DynamoDB table. 'PROVISIONED' is eligible for the AWS free tier,
+      and will reserve at least 1 capacity unit for reading and writing. 'PAY_PER_REQUEST'
+      enables on-demand scaling and billing.
+    AllowedValues:
+      - PROVISIONED
+      - PAY_PER_REQUEST
+  DynamoDbReadCapacity:
+    Type: Number
+    Default: 1
+    Description: |
+      The read capacity of the DynamoDB table. Only applies for 'PROVISIONED' billing mode.
+    MinValue: 1
+  DynamoDbWriteCapacity:
+    Type: Number
+    Default: 1
+    Description: |
+      The write capacity of the DynamoDB table. Only applies for 'PROVISIONED' billing mode.
+    MinValue: 1
+  CreateLambdaAliases:
+    Type: String
+    Default: true
+    AllowedValues:
+      - true
+      - false
+    Description: |
+      Choose 'tree' (default) if you want to have a 'dev', 'prod-green' and 'prod-blue' alias
+      for your Lambda, or 'false' if you only want to work on an unqualified Lambda (e.g. for prototyping)
+  LambdaTimeout:
+    Type: Number
+    Default: 3
+    Description: The timeout for the Lambda function in seconds
+    MinValue: 3
+    MaxValue: 10
+  LambdaMemorySize:
+    Type: Number
+    Default: 128
+    Description: The memory size for the Lambda function in MB
+    AllowedValues:
+      - 128
+      - 256
+      - 512
+      - 1024
+  LambdaRuntime:
+    Type: String
+    Default: "nodejs12.x"
+    Description: |
+      The runtime environment for the Lambda function
+    AllowedValues:
+      - "nodejs12.x"
+      - "nodejs14.x"
+  LambdaHandler:
+    Type: String
+    Default: "index.handler"
+    Description: |
+      The function within your deployment package that will handle incoming requests
+  LambdaCodeBucket:
+    Type: String
+    Description: |
+      The S3 bucket in which the zipped lambda code resides.
+  LambdaCodeKey:
+    Type: String
+    Description: |
+      The filename of the zipped lambda code.
+  LambdaCodeVersion:
+    Type: String
+    Description: |
+      The version key of the zipped lambda code.
+  AskPackageBucket:
+    Type: String
+    Description: |
+      The S3 bucket in which the zipped skill package resides, including
+      skill manifest and interaction model.
+  AskPackageKey:
+    Type: String
+    Description: |
+      The filename of the zipped skill package.
+      If it is not public, you need to define an IAM role as described here:
+      https://stackoverflow.com/a/55938559
+  AskPackageVersion:
+    Type: String
+    Description: |
+      The version key of the zipped skill package.
+  AskClientId:
+    Type: String
+    Default: "amzn1.application-oa2-client.1234"
+  AskClientSecret:
+    Type: String
+    Default: "1234"
+    NoEcho: true
+  AskClientRefreshToken:
+    Type: String
+    Default: "Atzr|1234"
+    NoEcho: true
+  AskVendorId:
+    Type: String
+    Default: "M1234"
+Metadata:
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label:
+          default: Generic parameters
+        Parameters:
+          - ProjectAlias
+          - DebugMode
+      - Label:
+          default: Lambda configuration
+        Parameters:
+          - CreateLambdaAliases
+          - LambdaTimeout
+          - LambdaMemorySize
+          - LambdaRuntime
+          - LambdaHandler
+          - LambdaCodeBucket
+          - LambdaCodeKey
+          - LambdaCodeVersion
+      - Label:
+          default: CloudWatch configuration
+        Parameters:
+          - LogRetention
+      - Label:
+          default: DynamoDB configuration
+        Parameters:
+          - CreateDynamoDbDatabase
+          - DynamoDbBillingMode
+          - DynamoDbReadCapacity
+          - DynamoDbWriteCapacity
+      - Label:
+          default: Alexa Skill configuration
+        Parameters:
+          - AskPackageBucket
+          - AskPackageKey
+          - AskPackageVersion
+          - AskClientId
+          - AskClientSecret
+          - AskClientRefreshToken
+          - AskVendorId
+    ParameterLabels:
+      ProjectAlias:
+        default: Used as a suffix for physical resource IDs
+      DebugMode:
+        default: Run the skill in debug mode, i.e. with verbose error messages?
+      LogRetention:
+        default: How many days will log data be retained in CloudWatch?
+      CreateDynamoDbDatabase:
+        default: Create DynamoDB database? If not, subsequent DynamoDB config will not apply.
+      DynamoDbBillingMode:
+        default: Use DynamoDB with provision or on-demand read and write capacity?
+      DynamoDbReadCapacity:
+        default: "For 'provisioned' billing mode: How many read capacity units to reserve?"
+      DynamoDbWriteCapacity:
+        default: "For 'provisioned' billing mode: How many write capacity units to reserve?"
+      CreateLambdaAliases:
+        default: Create 'dev', 'prod-blue' and 'prod-green' aliases for the Lambda function?
+      LambdaTimeout:
+        default: How many seconds for Lambda to process before timeout?
+      LambdaMemorySize:
+        default: How much memory (in MB) to provision per concurrent Lambda unit?
+      LambdaRuntime:
+        default: Which NodeJS runtime to use for Lambda?
+      LambdaHandler:
+        default: Which default handler to use for Lambda?
+      LambdaCodeBucket:
+        default: In which S3 bucket is the zip file with the Lambda code?
+      LambdaCodeKey:
+        default: What is the filename of the zipped Lambda code?
+      LambdaCodeVersion:
+        default: What is the version key of the zipped Lambda code?
+      AskPackageBucket:
+        default: In which S3 bucket is the zip file with the skill package (manifest and interaction model)?
+      AskPackageKey:
+        default: What is the filename of the zipped skill package?
+      AskPackageVersion:
+        default: What is the version key of the zipped skill package?
+      AskClientId:
+        default: What is the LWA client ID for the Alexa Developer Console account?
+      AskClientSecret:
+        default: What is the LWA client secret for the Alexa Developer Console account?
+      AskClientRefreshToken:
+        default: What is the LWA refresh token for the Alexa Developer Console account?
+      AskVendorId:
+        default: What is the vendor ID of the Alexa Developer Console account?
+Conditions:
+  isDynamoDbRequested: !Equals [!Ref CreateDynamoDbDatabase, 'true']
+  isDynamoDbProvisioned: !Equals [ !Ref DynamoDbBillingMode, PROVISIONED ]
+  isLambdaAliasRequested: !Equals [!Ref CreateLambdaAliases, 'true']
+  isNoLambdaAliasRequested: !Equals [!Ref CreateLambdaAliases, 'false']
+Resources:
+  LambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action:
+                - sts:AssumeRole
+        Path: /
+        Policies:
+          - PolicyName: !Sub ${ProjectAlias}-policy
+            PolicyDocument:
+              Version: 2012-10-17
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: !GetAtt LambdaLogGroup.Arn
+                - !If
+                  - isDynamoDbRequested
+                  - Effect: Allow
+                    Action:
+                      - dynamodb:PutItem
+                      - dynamodb:GetItem
+                      - dynamodb:UpdateItem
+                    Resource: 
+                      - !GetAtt DynamoDbTable.Arn
+                  - Ref: AWS::NoValue
+  LambdaLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Delete
+    Properties: 
+      LogGroupName: !Sub /aws/lambda/${ProjectAlias}-lambda
+      RetentionInDays: !Ref LogRetention
+  DynamoDbTable:
+    Type: AWS::DynamoDB::Table
+    Condition: isDynamoDbRequested
+    Properties: 
+      TableName: !Sub ${ProjectAlias}-table
+      AttributeDefinitions: 
+        - AttributeName: userId
+          AttributeType: S
+      BillingMode: !Ref DynamoDbBillingMode
+      KeySchema: 
+        - AttributeName: userId
+          KeyType: HASH
+      ProvisionedThroughput: !If
+        - isDynamoDbProvisioned
+        - ReadCapacityUnits: !Ref DynamoDbReadCapacity
+          WriteCapacityUnits: !Ref DynamoDbWriteCapacity
+        - !Ref AWS::NoValue
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${ProjectAlias}-lambda
+      Code:
+        S3Bucket: !Ref LambdaCodeBucket
+        S3Key: !Ref LambdaCodeKey
+        S3ObjectVersion: !Ref LambdaCodeVersion
+      Handler: !Ref LambdaHandler
+      Runtime: !Ref LambdaRuntime
+      Role: !GetAtt LambdaRole.Arn
+      MemorySize: !Ref LambdaMemorySize
+      Timeout: !Ref LambdaTimeout
+      Environment: 
+        Variables: 
+          DEBUG_MODE: !Ref DebugMode
+          PROJECT_NAME: !Ref ProjectAlias
+          DYNAMODB_TABLE_NAME: !If
+            - isDynamoDbRequested
+            - !Sub ${ProjectAlias}-table
+            - !Ref AWS::NoValue
+  LambdaEventPermission:
+    Type: AWS::Lambda::Permission
+    Condition: isNoLambdaAliasRequested
+    Properties:
+      Action: lambda:invokeFunction
+      FunctionName: !GetAtt LambdaFunction.Arn
+      Principal: alexa-appkit.amazon.com
+      EventSourceToken: !Ref AlexaSkill
+  LambdaAliasDev:
+    Type: AWS::Lambda::Alias
+    Condition: isLambdaAliasRequested
+    Properties:
+      FunctionName: !GetAtt LambdaFunction.Arn
+      FunctionVersion: $LATEST
+      Name: dev
+  LambdaAliasDevEventPermission:
+    Type: AWS::Lambda::Permission
+    Condition: isLambdaAliasRequested
+    Properties:
+      Action: lambda:invokeFunction
+      FunctionName: !Ref LambdaAliasDev
+      Principal: alexa-appkit.amazon.com
+      EventSourceToken: !Ref AlexaSkill
+  LambdaAliasProdBlue:
+    Type: AWS::Lambda::Alias
+    Condition: isLambdaAliasRequested
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      FunctionVersion: $LATEST
+      Name: prod-blue
+  LambdaAliasProdGreen:
+    Type: AWS::Lambda::Alias
+    Condition: isLambdaAliasRequested
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      FunctionVersion: $LATEST
+      Name: prod-green
+  LambdaAliasProdBlueEventPermission:
+    Type: AWS::Lambda::Permission
+    Condition: isLambdaAliasRequested
+    Properties:
+      Action: lambda:invokeFunction
+      FunctionName: !Ref LambdaAliasProdBlue
+      Principal: alexa-appkit.amazon.com
+      EventSourceToken: !Ref AlexaSkill
+  LambdaAliasProdGreenEventPermission:
+    Type: AWS::Lambda::Permission
+    Condition: isLambdaAliasRequested
+    Properties:
+      Action: lambda:invokeFunction
+      FunctionName: !Ref LambdaAliasProdGreen
+      Principal: alexa-appkit.amazon.com
+      EventSourceToken: !Ref AlexaSkill
+  AlexaSkill:
+    Type: Alexa::ASK::Skill
+    Properties: 
+      SkillPackage:
+        S3Bucket: !Ref AskPackageBucket
+        S3Key: !Ref AskPackageKey
+        S3ObjectVersion: !Ref AskPackageVersion
+        Overrides: 
+          Manifest: 
+            apis: 
+              custom: 
+                endpoint: 
+                  uri: !GetAtt LambdaFunction.Arn 
+      AuthenticationConfiguration: 
+        ClientId: !Ref AskClientId
+        ClientSecret: !Ref AskClientSecret
+        RefreshToken: !Ref AskClientRefreshToken
+      VendorId: !Ref AskVendorId
+Outputs:
+  SkillEndpoint:
+    Description: ARN of the Lambda 'dev' alias
+    Value: !If
+      - isLambdaAliasRequested
+      - !Ref LambdaAliasDev
+      - !GetAtt LambdaFunction.Arn
