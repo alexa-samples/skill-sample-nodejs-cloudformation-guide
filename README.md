@@ -6,7 +6,7 @@
 This repository has two purposes:
 1. Educate about the use of AWS CloudFormation (Cfn) as part of ASK CLI's cfn-deployer, and
 2. Offer examples for a range of common Cfn use cases. Currently, there include:
-    - The ASK CLI's [default 'Hello world' skill](./01_defaultSkill), to illustrate how cfn-deployer works on a basic level
+    - The ASK CLI's [default 'Hello world' skill](./mainline/--/01_defaultSkill), to illustrate how cfn-deployer works on a basic level
     - An improved 'basic' skill (using only Lambda and Cloudwatch resources) that incorporates some useful cfn-deployer tips
     - A 'DynamoDB' skill to serve as an example for both a DynamoDB resource and Cfn conditional statements
     - An 'S3' skill to serve as an example for both an S3 resource and string manipulation
