@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   ProjectAlias:
     Type: String
-    Default: cfnCookbook-cloudFrontSkill
+    Default: cfnCookbook-CloudFrontSkill
     Description: >
       An alias to make physical names of stack resources more easily to attribute
     AllowedPattern: '([a-zA-Z0-9-_]{4,64})'
