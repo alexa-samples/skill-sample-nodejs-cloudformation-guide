@@ -13,6 +13,16 @@ This README also introduces the following concepts:
 - Using **Cfn conditions** (introduced in the previous skill project) to conditionally create resources (in this case an optional `AWS::CloudFront::Distribution`)
 
 
+## Prerequisites
+
+To deploy this project, you (i.e. your AWS CLI user) need to have permissions for S3 and CloudFront (in addition to the basic Lambda, CloudWatch and IAM permissions). You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AmazonS3FullAccess
+- CloudFrontFullAccess
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
+
+
 ## Background: S3 bucket name challenges
 
 Within this project, we'll create an S3 bucket resource. S3 bucket names have [strict naming rules](https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html), among them:

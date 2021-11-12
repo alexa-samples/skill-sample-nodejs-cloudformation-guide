@@ -7,6 +7,16 @@ There are no completely new Cfn concepts introduced in this project, but you can
 
 A word of warning: ASK CLI and cfn-deployer only takes you 95% of the way to deploying a FB skill end-to-end, but will ultimately throw an error message due to setting the endpoint URI in the wrong place in the skill manifest (`skill.json`). To fix this, please see section "Plugging the endpoint into the skill manifest".
 
+
+## Prerequisites
+
+To deploy this project, you (i.e. your AWS CLI user) need to have permissions for API Gateway (in addition to the basic Lambda, CloudWatch and IAM permissions). You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AmazonAPIGatewayAdministrator
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
+
+
 ## Using Lambda to generate a FB feed
 
 The requirements for a FB feed [are documented here](https://developer.amazon.com/en-US/docs/alexa/flashbriefing/flash-briefing-skill-api-feed-reference.html). For this project, we provide dummy text content in JSON format:

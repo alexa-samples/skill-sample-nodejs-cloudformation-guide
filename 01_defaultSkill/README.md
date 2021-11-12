@@ -5,6 +5,13 @@ Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'default' sk
 
 This document highlights some weaknesses (marked with :warning:) of the default project, which are mostly compromises to make it more beginner-friendly. The 'basic' skill project will use practically the same resources, but with a bit of finesse, which will mitigate the weaknesses pointed out here.
 
+## Prerequisites
+
+To deploy this project, you (i.e. your AWS CLI user) need to have permissions for Lambda, CloudWatch and IAM. You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
+
 ## General configuration
 
 The `ask-resources.json` contains the required `profiles.<default>.skillInfrastructure.userConfig` properties `runtime`, `handler`, `templatePath` and `awsRegion`, but no `artifactsS3` property.

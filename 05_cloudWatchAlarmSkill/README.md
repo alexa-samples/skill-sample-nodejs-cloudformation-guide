@@ -8,6 +8,16 @@ This project is based on [this demo repository](https://github.com/alexa-samples
 This README also introduces this concept:
 - **Advanced configuration opitions**: Passing sensitive or user-specific data (in this case, the email address for the SNS email topic) to `cfn-deployer` from `ask-resources.json` instead of hard-coding them in `skill-stack.yaml`.
 
+
+## Prerequisites
+
+To deploy this project, you (i.e. your AWS CLI user) need to have permissions for SNS (in addition to the basic Lambda, CloudWatch and IAM permissions). You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AmazonSNSFullAccess
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
+
+
 ## Advanced configuration options
 
 In this project we're using an SNS email topic to receive mails with error notifications. The recipient email address is passed with the parameter `NotificationEMail` to the `Subscription.Endpoint` property of the `AWS::SNS::Topic` resource:

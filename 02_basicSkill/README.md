@@ -11,6 +11,13 @@ This README also introduces the following concepts:
 - Setting **Lambda environment variables** (see the `Lambdafunction` resource)
 - Preparing **blue-green deployment** using Lambda aliases (see the section on `AWS::Lambda::Alias` resources)
 
+## Prerequisites
+
+To deploy this project, you (i.e. your AWS CLI user) need to have permissions for Lambda, CloudWatch and IAM. You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
+
 ## Advanced configuration options
 
 In the 'default' skill project's README I pointed out the unfortunate and wasteful default cfn-deployer setting, by which a new S3 bucket is created for each deployment.

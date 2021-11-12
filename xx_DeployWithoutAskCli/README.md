@@ -6,6 +6,16 @@ Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this project show
 
 This template also features how to use **Cfn Metadata** to provide a structured, well-annotated Cfn console experience.
 
+
+## Prerequisites
+
+Just as with the ASK CLI projects, you (i.e. your AWS CLI user) need to have permissions for all the services you want to provision in this project - In this case Lambda,  CloudWatch and IAM, and optionally DynamoDB. You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AmazonDynamoDBFullAccess
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
+
+
 ## Cfn's `Alexa::ASK::Skill` resource
 
 Cfn provides [an `Alexa::ASK::Skill` resource](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ask-skill.html) to set up an Alexa skill in the designated vendor account:

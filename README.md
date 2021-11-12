@@ -19,6 +19,11 @@ This README provides a general introduction to Cfn, as far as relevant for Alexa
 ## Prerequisites
 
 Prerequisite for trying out these examples is [a configured ASK CLI profile](https://developer.amazon.com/en-US/docs/alexa/smapi/ask-cli-command-reference.html#configure-command) that is associated with [a configured AWS CLI profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html). The AWS CLI user needs to have a the IAM policies required for deploying the respective resources (e.g. `lambda:CreateFunction`).
+A conventient set of managed IAM policies is provided for each project. Generally, what you'll need for each project are, and corresponding managed IAM policies are:
+- CloudFormation permissions --> `AWSCloudFormationFullAccess`
+- Lambda permissions to set up the Lambda function --> `AWSLambda_FullAccess`
+- CloudWatch permissions to set up the CloudWatch log group --> `AWSLambda_FullAccess`
+- IAM permissions to create the Lambda role and policy --> `CloudWatchFullAccess`
 
 ### Trying out Cfn templates without ASK CLI
 
