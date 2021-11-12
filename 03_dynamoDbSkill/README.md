@@ -3,9 +3,18 @@
 
 Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'DynamoDB' skill project shows how to create a 'classic' skill stack with AWS DynamoDB for persistence.
 
+For ease of demonstration, the skill itself will only count how many sessions the respective user had. In order to do so, its Lambda function reads from, and writes to the DynamoDB table created in the project.
+
 Beside how to model a DnymoDB resource in Cfn, this README also introduces the following concept:
 - Using **Cfn conditions** to set multiple resource properties based on the value of a single parameter
 
+## Prerequisites
+
+To deploy this project, you (i.e. your AWS CLI user) need to have permissions for DynamoDB, Lambda and CloudWatch. You can probably get by with fewer permissions, but a convenient selection of managed IAM policies are:
+- AmazonDynamoDBFullAccess
+- AWSLambda_FullAccess
+- CloudWatchFullAccess
+- IAMFullAccess
 
 ## Parameters
 
