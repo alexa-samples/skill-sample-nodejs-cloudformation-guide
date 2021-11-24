@@ -1,12 +1,12 @@
 {
-    "name": "hello-world",
-    "version": "1.1.0",
-    "description": "alexa utility for quickly building skills",
+  "name": "askcli-cfn-cookbook_apigateway-skill",
+  "version": "1.0.0",
+  "description": "From ASK CLI CloudFormation Cookbook: Flash Briefing skill example via API Gateway",
     "main": "index.js",
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Amazon Alexa",
-    "license": "ISC",
+    "license": "ASL",
     "dependencies": {}
   }
