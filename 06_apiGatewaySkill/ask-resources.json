@@ -21,7 +21,7 @@
           ],
           "artifactsS3": {
             "bucketName": "cfn-source-eu-west-1",
-            "bucketKey": "cfnCookbookApiGateway.zip"
+            "bucketKey": "cfnGuideApiGateway.zip"
           }
         },
         "type": "@ask-cli/cfn-deployer"

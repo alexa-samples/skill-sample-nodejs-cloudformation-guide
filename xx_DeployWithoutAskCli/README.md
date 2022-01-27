@@ -2,7 +2,7 @@
 
 # Skill deployment without ASK CLI
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this project shows how to deploy an Alexa skill without ASK CLI and cfn-deplyoer, i.e. directly with Cfn either in the [Cfn console](https://console.aws.amazon.com/cloudformation/home) or [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html).
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this project shows how to deploy an Alexa skill without ASK CLI and cfn-deplyoer, i.e. directly with Cfn either in the [Cfn console](https://console.aws.amazon.com/cloudformation/home) or [AWS CLI](https://docs.aws.amazon.com/cli/latest/reference/cloudformation/index.html).
 
 This template also features how to use **Cfn Metadata** to provide a structured, well-annotated Cfn console experience.
 
@@ -55,8 +55,8 @@ To facilitate your experimentation with this way of skill deployment, I provide 
 
 ```
 LambdaCodeBucket: cfn-source-eu-west-1
-LambdaCodeKey: cfnCookbookDummy.zip
-LambdaCodeVersion: eUUqLNIE_pPC16_fb1OpBVRJmZT4qibs
+LambdaCodeKey: cfnGuideDummy.zip
+LambdaCodeVersion: CpDMWFsA1rhwyso8BRArT4NBhvw7rZTw
 AskPackageBucket: cfn-source-eu-west-1
 AskPackageKey: skill-package.zip
 AskPackageVersion: zf_ATm8bPpev0g1HMKwrL2Zsn1xhZHvb

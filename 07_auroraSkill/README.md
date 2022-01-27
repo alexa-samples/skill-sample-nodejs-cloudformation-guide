@@ -1,7 +1,7 @@
 
 # 'Aurora' Skill
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'Aurora' skill project demonstrates how to set up [an AWS Aurora Serverless database](https://aws.amazon.com/rds/aurora/serverless/), and i[ts Data API](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html).
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'Aurora' skill project demonstrates how to set up [an AWS Aurora Serverless database](https://aws.amazon.com/rds/aurora/serverless/), and i[ts Data API](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html).
 
 An Aurora Serverless DB can be a preferrable way to persist data over the 'default' NoSQL DynamoDB, e.g. when:
 - The skill operates on a number of entities (e.g. users, sessions, products, scores, ...) with well-defined and relevant relationships

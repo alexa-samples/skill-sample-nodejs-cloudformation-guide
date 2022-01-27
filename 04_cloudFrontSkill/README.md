@@ -1,7 +1,7 @@
 
 # 'Content delivery' (S3 + CloudFront) Skill
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'content delivery' skill project exemplifies how to set up an S3 bucket suitable for storing media content, e.g. dynamically generated audio files from AWS Polly, and a CloudFront Content Distribution Network (CDN) to deliver such files to customers with minimal latency.
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'content delivery' skill project exemplifies how to set up an S3 bucket suitable for storing media content, e.g. dynamically generated audio files from AWS Polly, and a CloudFront Content Distribution Network (CDN) to deliver such files to customers with minimal latency.
 
 In real-life use cases, these two scenarios are most likely:
 1. You dynamically generate AWS Polly files, e.g. because you're generating some highly dynamic or personalized content. In this case you wouldn't need a CDN, because you'd typically only use each file once.
@@ -39,7 +39,7 @@ While option 2 is straightforward, option 1 requires a new Cfn feature: [Macros]
 An addition requirement is that S3 bucket names need to be [globally unique](https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html). If we use a fully static value for the `BucketName` property, only a single person will be able to successfully use the default version of this template - Everyone else will get a 'bucket name is already taken' error.
 
 To solve this, we use a **random-ish bucket suffix**. We could also do this using a Cfn macro, but an easier way is to a the random section of the Cfn stack ID, which we can access using the `AWS::StackId` pseudoparameter. The Cfn stack ID has this structure:
-- Example value: `:aws:cloudformation:eu-west-1:262684245649:stack/ask-CloudFormationCookbook-S3CloudFrontSkill-default-skillStack-1633698399313/a0b21df0-2838-11ec-8ad7-0a151ad97b55`
+- Example value: `:aws:cloudformation:eu-west-1:262684245649:stack/ask-CloudFormationGuide-S3CloudFrontSkill-default-skillStack-1633698399313/a0b21df0-2838-11ec-8ad7-0a151ad97b55`
 - Coarse structure: `<Stack ARN>/<Stack name>/<UUID>`
 - Finer structure: `<Stack ARN>/<Stack name>/<[0-9a-f]{8}>-<[0-9a-f]{4}>-<[0-9a-f]{4}>-<[0-9a-f]{4}>-<[0-9a-f]{12}>`
 
@@ -55,7 +55,7 @@ Parameters:
   [...]
   ProjectAlias:
     Type: String
-    Default: cfnCookbook-cloudFrontSkill
+    Default: cfnGuide-cloudFrontSkill
     Description: >
       An alias to make physical names of stack resources more easily to attribute
     AllowedPattern: '([a-zA-Z0-9][a-zA-Z0-9-]{3,64})'

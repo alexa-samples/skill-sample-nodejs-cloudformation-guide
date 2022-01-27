@@ -18,7 +18,7 @@
           "awsRegion": "eu-west-1",
           "artifactsS3": {
             "bucketName": "cfn-source-eu-west-1",
-            "bucketKey": "cfnCookbookDynamoDb.zip"
+            "bucketKey": "cfnGuideDynamoDb.zip"
           }
         },
         "type": "@ask-cli/cfn-deployer"

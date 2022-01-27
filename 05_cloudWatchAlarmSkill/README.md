@@ -1,7 +1,7 @@
 
 # 'Monitoring' (CloudWatch Alarm + SNS) Skill
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'monitoring' skill project exemplifies how to set up basic skill monitoring using [CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) and SNS topic for [email notifications](https://docs.aws.amazon.com/sns/latest/dg/sns-email-notifications.html).
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'monitoring' skill project exemplifies how to set up basic skill monitoring using [CloudWatch Alarms](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html) and SNS topic for [email notifications](https://docs.aws.amazon.com/sns/latest/dg/sns-email-notifications.html).
 
 This project is based on [this demo repository](https://github.com/alexa-samples/error-notification-sample-skill) for monitoring a skill Lambda with email and Slack notifications.
 

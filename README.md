@@ -1,5 +1,5 @@
 
-# AWS CloudFormation + ASK CLI Cookbook
+# AWS CloudFormation + ASK CLI Guide
 
 ## Introduction
 
@@ -28,11 +28,11 @@ A convenient set of managed IAM policies is provided for each project. Generally
 
 ### Trying out Cfn templates without ASK CLI
 
-In some cases you might want to try out some of the templates in this Cookbook without setting up a skill project (or an ASK CLI profile) first. This is possible, e.g. if you just upload one of the templates files in the [AWS Cfn Console](https://console.aws.amazon.com/cloudformation/home). One issue you'll encounter is to provide values for the parameters `CodeBucket`, `CodeKey`, `CodeVersion` & `SkillId` (explained in the 'Interaction b/w Cfn and ASK CLI' section below). If you fill in nonsense values (at least for the `Code*` parameters), the deployment will fail!
+In some cases you might want to try out some of the templates in this guide without setting up a skill project (or an ASK CLI profile) first. This is possible, e.g. if you just upload one of the templates files in the [AWS Cfn Console](https://console.aws.amazon.com/cloudformation/home). One issue you'll encounter is to provide values for the parameters `CodeBucket`, `CodeKey`, `CodeVersion` & `SkillId` (explained in the 'Interaction b/w Cfn and ASK CLI' section below). If you fill in nonsense values (at least for the `Code*` parameters), the deployment will fail!
 Instead, you can use these 'dummy' values:
 - **CodeBucket:** `cfn-source-eu-west-1`
-- **CodeKey:** `cfnCookbookDummy.zip`
-- **CodeVersion:** `eUUqLNIE_pPC16_fb1OpBVRJmZT4qibs`
+- **CodeKey:** `cfnGuideDummy.zip`
+- **CodeVersion:** `CpDMWFsA1rhwyso8BRArT4NBhvw7rZTw`
 - **SkillId:** `amzn1.ask.skill.20998b0d-c197-4289-8e31-44f2adb51240`
 
 ## Quickstart

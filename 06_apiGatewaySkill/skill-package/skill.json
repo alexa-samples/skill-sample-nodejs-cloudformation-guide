@@ -4,7 +4,7 @@
     "publishingInformation": {
       "locales": {
         "en-US": {
-          "name": "CloudFormation Cookbook - API Gateway Flash Briefing",
+          "name": "CloudFormation Guide - API Gateway Flash Briefing",
           "summary": "Lorem ipsum dolor sit amet",
           "description": "Lorem ipsum dolor sit amet",
           "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_apiGateway_small.png",
@@ -38,7 +38,7 @@
               {
                 "name": "default feed",
                 "isDefault": true,
-                "vuiPreamble": "From cloud formation cookbook: ",
+                "vuiPreamble": "From cloud formation guide: ",
                 "updateFrequency": "HOURLY",
                 "genre": "POLITICS",
                 "imageUri": "https://skillicons.s3.amazonaws.com/cfn_apiGateway_large.png",

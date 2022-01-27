@@ -9,7 +9,7 @@
           ],
           "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_cloudfront_small.png",
           "largeIconUri": "https://skillicons.s3.amazonaws.com/cfn_cloudfront_large.png",
-          "name": "CloudFormation Cookbook - S3 + CloudFront Skill",
+          "name": "CloudFormation Guide - S3 + CloudFront Skill",
           "description": "Lorem ipsum dolor sit amet"
         }
       },

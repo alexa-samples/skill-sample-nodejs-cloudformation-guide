@@ -9,7 +9,7 @@
           ],
           "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_lambda_small.png",
           "largeIconUri": "https://skillicons.s3.amazonaws.com/cfn_lambda_large.png",
-          "name": "CloudFormation Cookbook - Basic Skill",
+          "name": "CloudFormation Guide - Basic Skill",
           "description": "Lorem ipsum dolor sit amet"
         }
       },

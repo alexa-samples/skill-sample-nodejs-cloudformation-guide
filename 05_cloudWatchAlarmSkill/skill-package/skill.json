@@ -9,7 +9,7 @@
           ],
           "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_cloudwatch_small.png",
           "largeIconUri": "https://skillicons.s3.amazonaws.com/cfn_cloudwatch_large.png",
-          "name": "CloudFormation Cookbook - CloudWatch Alarm Skill",
+          "name": "CloudFormation Guide - CloudWatch Alarm Skill",
           "description": "Lorem ipsum dolor sit amet"
         }
       },

@@ -18,7 +18,7 @@
           "awsRegion": "eu-west-1",
           "artifactsS3": {
             "bucketName": "cfn-source-eu-west-1",
-            "bucketKey": "cfnCookbookBasic.zip"
+            "bucketKey": "cfnGuideBasic.zip"
           }
         },
         "type": "@ask-cli/cfn-deployer"

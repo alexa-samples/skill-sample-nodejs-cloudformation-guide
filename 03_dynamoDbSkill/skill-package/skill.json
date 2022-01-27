@@ -9,7 +9,7 @@
           ],
           "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_dynamoDb_small.png",
           "largeIconUri": "https://skillicons.s3.amazonaws.com/cfn_dynamoDb_large.png",
-          "name": "CloudFormation Cookbook - DynamoDB Skill",
+          "name": "CloudFormation Guide - DynamoDB Skill",
           "description": "Lorem ipsum dolor sit amet"
         }
       },

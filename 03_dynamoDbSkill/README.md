@@ -1,7 +1,7 @@
 
 # 'DynamoDB' Skill
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'DynamoDB' skill project shows how to create a 'classic' skill stack with AWS DynamoDB for persistence.
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'DynamoDB' skill project shows how to create a 'classic' skill stack with AWS DynamoDB for persistence.
 
 For ease of demonstration, the skill itself will only count how many sessions the respective user had. In order to do so, its Lambda function reads from, and writes to the DynamoDB table created in the project.
 

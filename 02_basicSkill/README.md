@@ -1,7 +1,7 @@
 
 # 'Basic' Skill
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'basic' skill project proposes a skill project template that leverages the advantages of cfn-deployer more than the 'default' template.
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'basic' skill project proposes a skill project template that leverages the advantages of cfn-deployer more than the 'default' template.
 
 This README also introduces the following concepts:
 - Defining a **single S3 bucket for Lambda code deployments** via the `artifactsS3` config
@@ -34,7 +34,7 @@ To make best use of this parameter, I recommend to set up a single S3 bucket in 
 Parameters:
   ProjectAlias:
     Type: String
-    Default: cfnCookbook-basicSkill
+    Default: cfnGuide-basicSkill
     Description: >
       An alias to make physical names of stack resources more easily to attribute
     AllowedPattern: '([a-zA-Z0-9-_]{4-64})'
@@ -42,7 +42,7 @@ Parameters:
       Must be between 4 and 64 letters,
       and contain only alphanumeric characters, hyphens and underscores
 ```
-The `ProjectAlias` parameter is used to give ressources created in this stack more easily attributable and human-readable names, e.g. the Lambda function will not be listed as `ask-AWSCloudFormationDefault-de-AlexaSkillFunction-3v4MPaQMvp27` as in the 'default' skill project, but as `cfnCookbook-basicSkill-lambda`.
+The `ProjectAlias` parameter is used to give ressources created in this stack more easily attributable and human-readable names, e.g. the Lambda function will not be listed as `ask-AWSCloudFormationDefault-de-AlexaSkillFunction-3v4MPaQMvp27` as in the 'default' skill project, but as `cfnGuide-basicSkill-lambda`.
 You can use the `AllowedPattern` constraint to with a regular expression to avoid characters that would be invalid for a resource name.
 
 ```

@@ -1,7 +1,7 @@
 
 # 'Flash Briefing' Skill using API Gateway
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'flash briefing' skill project describes how to set up an HTTP endpoint for your Lambda function using [AWS API Gateway](https://aws.amazon.com/api-gateway/). This HTTP endpoint can be used as the feed URL for a flash briefing (FB) skill.
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'flash briefing' skill project describes how to set up an HTTP endpoint for your Lambda function using [AWS API Gateway](https://aws.amazon.com/api-gateway/). This HTTP endpoint can be used as the feed URL for a flash briefing (FB) skill.
 
 There are no completely new Cfn concepts introduced in this project, but you can learn how to use `cfn-deployer` for a skill type that is not 'custom'.
 
@@ -25,7 +25,7 @@ The requirements for a FB feed [are documented here](https://developer.amazon.co
 {
     uid: "urn:uuid:01234567-0123-4567-89ab-0123456789ab",
     updateDate: "2021-10-11T00:00:00.0Z",
-    titleText: "Cloud Formation Cookbook Update Number 1",
+    titleText: "Cloud Formation Guide Update Number 1",
     mainText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
     streamUrl: "",
     redirectionUrl: "https://www.example.com/redirectionPage",

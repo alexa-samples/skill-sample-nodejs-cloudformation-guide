@@ -9,7 +9,7 @@
           ],
           "smallIconUri": "https://skillicons.s3.amazonaws.com/cfn_aurora_small.png",
           "largeIconUri": "https://skillicons.s3.amazonaws.com/cfn_aurora_large.png",
-          "name": "CloudFormation Cookbook - Aurora Skill",
+          "name": "CloudFormation Guide - Aurora Skill",
           "description": "Lorem ipsum dolor sit amet"
         }
       },

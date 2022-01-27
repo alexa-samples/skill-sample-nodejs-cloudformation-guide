@@ -1,7 +1,7 @@
 
 # 'Default' Skill
 
-Within the 'AWS CloudFormation + ASK CLI Cookbook' repository, this 'default' skill project explains the 'out of the box' Cfn template + infrastructure that comes along when you initiate a new skill project with `ask new` (at least, if you choose 'NodeJS', 'AWS with CloudFormation' and either 'High low game' or 'Fact skill').
+Within the 'AWS CloudFormation + ASK CLI Guide' repository, this 'default' skill project explains the 'out of the box' Cfn template + infrastructure that comes along when you initiate a new skill project with `ask new` (at least, if you choose 'NodeJS', 'AWS with CloudFormation' and either 'High low game' or 'Fact skill').
 
 This document highlights some weaknesses (marked with :warning:) of the default project, which are mostly compromises to make it more beginner-friendly. The 'basic' skill project will use practically the same resources, but with a bit of finesse, which will mitigate the weaknesses pointed out here.
 
