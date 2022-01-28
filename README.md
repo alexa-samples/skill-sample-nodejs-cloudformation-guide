@@ -6,14 +6,14 @@
 This repository has two purposes:
 1. Educate about the use of AWS CloudFormation (Cfn) as part of ASK CLI's cfn-deployer, and
 2. Offer examples for a range of common Cfn use cases. Currently, there include:
-    - The ASK CLI's [default 'Hello world' skill](./mainline/--/01_defaultSkill), to illustrate how cfn-deployer works on a basic level
-    - An [improved 'basic' skill](./mainline/--/02_basicSkill) (using only Lambda and CloudWatch resources) that features some useful cfn-deployer tips
-    - A ['DynamoDB' skill](./mainline/--/03_dynamoDbSkill) as an example for a DynamoDB resource and Cfn conditional statements
-    - A ['content delivery' skill](./mainline/--/04_cloudFrontSkill) as an example for an S3 bucket and a CloudFront CDN, and string manipulation
-    - A ['monitoring' skill](./mainline/--/05_cloudWatchAlarmSkill) as an example for a Cloudwatch Alarm and an SNS topic, and how to use custom project parameters
-    - A [Flash Briefing skill](./mainline/--/06_apiGatewaySkill) as an example for an API Gateway, and how to set up a different skill type than 'custom'
-    - An ['Aurora' skill](./mainline/--/07_apiGatewaySkill) as an example for persistence using an Aurora Serverless DB, its Data API and the AWS Secret required for authentication
-    - An [ASK CLI-less skill](./mainline/--/xx_DeployWithoutAskCli) as an example for how to deploy a skill using Cfn's `Alexa::ASK::Skill` resource type, and for how to use Cfn metadata to structure and annotate parameter input
+    - The ASK CLI's [default 'Hello world' skill](01_defaultSkill/), to illustrate how cfn-deployer works on a basic level
+    - An [improved 'basic' skill](02_basicSkill/) (using only Lambda and CloudWatch resources) that features some useful cfn-deployer tips
+    - A ['DynamoDB' skill](03_dynamoDbSkill/) as an example for a DynamoDB resource and Cfn conditional statements
+    - A ['content delivery' skill](04_cloudFrontSkill/) as an example for an S3 bucket and a CloudFront CDN, and string manipulation
+    - A ['monitoring' skill](05_cloudWatchAlarmSkill/) as an example for a Cloudwatch Alarm and an SNS topic, and how to use custom project parameters
+    - A [Flash Briefing skill](06_apiGatewaySkill/) as an example for an API Gateway, and how to set up a different skill type than 'custom'
+    - An ['Aurora' skill](07_apiGatewaySkill/) as an example for persistence using an Aurora Serverless DB, its Data API and the AWS Secret required for authentication
+    - An [ASK CLI-less skill](xx_DeployWithoutAskCli/) as an example for how to deploy a skill using Cfn's `Alexa::ASK::Skill` resource type, and for how to use Cfn metadata to structure and annotate parameter input
 
 This README provides a general introduction to Cfn, as far as relevant for Alexa skill development, and outlines the interaction between ASK CLI and Cfn.
 

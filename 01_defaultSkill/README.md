@@ -15,7 +15,7 @@ To deploy this project, you (i.e. your AWS CLI user) need to have permissions fo
 ## General configuration
 
 The `ask-resources.json` contains the required `profiles.<default>.skillInfrastructure.userConfig` properties `runtime`, `handler`, `templatePath` and `awsRegion`, but no `artifactsS3` property.
-:warning: Using this default configuration will cause the cfn-deployer to **create a new s3 bucket for each deployment**! If you actively develop a skill, this will quickly flood your AWS S3 console with outdated buckets. You can avoid this by configuring cfn-deployer to use an existing S3 bucket to host all your to-be-deployed lambda code, via the `artifactsS3` property (as seen in the 'basicSkill' project).
+:warning: Using this default configuration will cause the cfn-deployer to **create a new s3 bucket for each deployment**! If you actively develop a skill, this will quickly flood your AWS S3 console with outdated buckets. You can avoid this by configuring cfn-deployer to use an existing S3 bucket to host all your to-be-deployed lambda code, via the `artifactsS3` property (as seen in the ['basicSkill' project](../02_basicSkill)).
 
 ## Parameters
 
